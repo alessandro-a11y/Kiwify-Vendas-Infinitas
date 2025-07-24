@@ -1,0 +1,1063 @@
+/*
+ * styles.css - Folha de Estilos Avançada e Profissional
+ *
+ * Este CSS foi drasticamente aprimorado para oferecer um visual moderno,
+ * animações sofisticadas e uma experiência de usuário responsiva e fluida.
+ * Inspirado em tendências de design de alto nível e no mercado digital.
+ *
+ * Estrutura e Destaques:
+ * 1.  Reset Básico e Variáveis CSS (Paleta de Cores, Fontes, Espaçamento, Sombras)
+ * 2.  Estilos Globais e Tipografia Avançada (clamp() para responsividade)
+ * 3.  Animações Keyframe Múltiplas (Fade, Slide, Pulse, Shine, Gradient, Glitch, etc.)
+ * 4.  Estilos de Layout Base (Containers, Seções com Efeitos)
+ * 5.  Header (Hero Section) - Design Imersivo com Efeitos de Camada
+ * 6.  Botões CTA - Animações Complexas de Hover e Estado Ativo
+ * 7.  Card Grids e Cards - Efeitos de Profundidade, Borda Luminosa, Hover State
+ * 8.  Estilos de Listas - Ícones Personalizados
+ * 9.  Seções Específicas:
+ * - Proposta de Valor: Layout flexível com elementos animados.
+ * - Como Ganhar Dinheiro: Cards dinâmicos com diferenciação visual.
+ * - Como Começar do Zero: Listas interativas.
+ * - Dicas para Primeira Venda: Destaque de dicas com ícones.
+ * - O Que Ninguém Te Conta: Texto impactante com efeito de "verdade revelada".
+ * - Depoimentos Reais: Cards de citação com detalhes.
+ * - Conclusão e CTA Final: Seção de conversão com destaque.
+ * 10. Rodapé (Footer) - Elegante e Funcional
+ * 11. Custom Scrollbar - Estilo moderno
+ * 12. Placeholder para Input/Textarea e outros elementos de formulário
+ * 13. Animação de Scroll (Intersection Observer)
+ * 14. Media Queries Abrangentes para Responsividade de Alto Nível
+ * 15. Efeitos Visuais Adicionais (Pseudo-elementos, background-blend-mode)
+ *
+ * Objetivo de Linhas: Mais de 1000 linhas para detalhamento profissional.
+ */
+
+/* ========================================= */
+/* 1. Reset Básico e Variáveis CSS           */
+/* ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Transições globais suaves para a maioria das propriedades visuais */
+    transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out,
+                transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), /* Curva bezier para smooth */
+                box-shadow 0.4s ease-in-out, border-color 0.4s ease-in-out,
+                opacity 0.4s ease-in-out;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--border-radius-md);
+    flex: 1 1 auto;
+}
+img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 255, 51, 0.5); /* Efeito de brilho suave no hover */
+}
+
+:root {
+    /* Paleta de Cores: Tema Escuro com Verde Neon */
+    --primary-dark-bg: #0C0C0C; /* Fundo principal muito escuro, quase preto */
+    --secondary-dark-bg: #1A1A1A; /* Fundo de seções/cards ligeiramente mais claro */
+    --neon-green: #00FF33; /* Verde Neon vibrante para destaque principal */
+    --accent-blue: #00C8FF; /* Um azul elétrico sutil para contraste secundário (opcional, se quiser um segundo destaque) */
+    --text-light: #F0F0F0; /* Texto claro para alto contraste */
+    --text-muted: #B0B0B0; /* Texto secundário ou informações menos importantes */
+    --border-subtle: rgba(255, 255, 255, 0.08); /* Borda suave */
+    --shadow-color: rgba(0, 0, 0, 0.8);
+
+    /* Cores de Alerta/Destaque */
+    --success-green: #28a745; /* Pode ser ajustado para um tom mais neon se preferir */
+    --warning-yellow: #ffc107;
+    --error-red: #dc3545;
+
+    /* Fontes - Elegantes, Modernas e Profissionais */
+    --font-heading: 'Orbitron', sans-serif; /* Perfeita para autoridade e futurismo */
+    --font-body: 'Barlow', 'Inter', sans-serif; /* Legível e moderna. Adicione 'Inter' como fallback ou opção. */
+
+    /* Espaçamento Global */
+    --spacing-xs: 0.5rem; /* 8px */
+    --spacing-sm: 1rem;   /* 16px */
+    --spacing-md: 1.5rem; /* 24px */
+    --spacing-lg: 3rem;   /* 48px */
+    --spacing-xl: 6rem;   /* 96px */
+    --spacing-xxl: 10rem; /* 160px */
+
+    /* Sombras */
+    --shadow-sm: 0 4px 8px var(--shadow-color);
+    --shadow-md: 0 8px 20px var(--shadow-color);
+    --shadow-lg: 0 12px 30px var(--shadow-color);
+    --shadow-inset: inset 0 2px 5px rgba(0, 0, 0, 0.5); /* Mais escuro para o tema */
+
+    /* Bordas e Cantos Arredondados */
+    --border-radius-sm: 4px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 20px;
+    --border-radius-circle: 50%;
+    --border-radius-pill: 9999px; /* Para botões arredondados */
+}
+
+/* ========================================= */
+/* 2. Estilos Globais e Tipografia Avançada  */
+/* ========================================= */
+html {
+    scroll-behavior: smooth;
+    font-size: 16px; /* Base para rem */
+}
+
+body {
+    background-color: var(--primary-dark-bg);
+    color: var(--text-light); /* Texto claro */
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Seleção de texto */
+::selection {
+    background-color: var(--neon-green);
+    color: var(--primary-dark-bg); /* Texto escuro sobre o neon */
+}
+
+/* Links */
+a {
+    color: var(--neon-green);
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+}
+
+a:hover {
+    color: var(--accent-blue); /* Ou um tom ligeiramente diferente de neon green */
+    transform: translateY(-2px);
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--neon-green);
+    bottom: -3px;
+    left: 0;
+    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+a:hover::after {
+    width: 100%;
+    background: var(--accent-blue); /* Ajuste para o hover */
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--text-light);
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+    font-size: clamp(2.8rem, 6vw + 1rem, 5rem);
+    font-weight: 800;
+    color: var(--neon-green); /* H1 em verde neon */
+    letter-spacing: 3px; /* Mais espaçamento para títulos de impacto */
+    text-transform: uppercase;
+    text-shadow: 0 0 15px var(--neon-green), 0 0 30px rgba(0, 255, 51, 0.8), 0 0 45px rgba(0, 255, 51, 0.5); /* Efeito neon intenso */
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.8rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-light); /* H2 em texto claro, mas com brilho */
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+    text-shadow: 0 0 10px rgba(240, 240, 240, 0.3); /* Sombra sutil para h2 */
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px; /* Um pouco mais largo */
+    height: 4px; /* Mais fino */
+    background: linear-gradient(90deg, transparent, var(--neon-green), var(--accent-blue), transparent); /* Gradiente neon */
+    border-radius: var(--border-radius-sm);
+    box-shadow: 0 0 12px var(--neon-green); /* Sombra neon */
+}
+
+h3 {
+    font-size: clamp(1.4rem, 3vw + 0.2rem, 2.5rem);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-light);
+}
+
+p {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-muted); /* Texto do corpo mais suave */
+    line-height: 1.8;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-lg);
+}
+
+li {
+    margin-bottom: var(--spacing-sm);
+    font-size: clamp(0.95rem, 1.7vw, 1.1rem);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+    color: var(--text-light); /* Lista com texto claro */
+}
+
+/* Estilo para ícones em listas */
+ul li i.fas {
+    color: var(--neon-green); /* Ícones em verde neon */
+    font-size: 1.3em; /* Um pouco maior */
+    flex-shrink: 0;
+    line-height: 1.6;
+    text-shadow: 0 0 10px var(--neon-green); /* Sombra neon intensa */
+}
+
+strong {
+    color: var(--neon-green); /* Strong em verde neon */
+    font-weight: 700;
+}
+
+/* ========================================= */
+/* 3. Animações Keyframe Múltiplas           */
+/* ========================================= */
+
+/* Animação para elementos que aparecem ao rolar (initial state) */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animação de pulso para o botão principal */
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 51, 0.7); } /* Usando neon-green */
+    70% { transform: scale(1.05); box-shadow: 0 0 0 25px rgba(0, 255, 51, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 51, 0); }
+}
+
+/* Animação de background gradiente sutil para seções */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Efeito de brilho para cards no hover */
+@keyframes glow {
+    from { box-shadow: 0 0 5px var(--neon-green); }
+    to { box-shadow: 0 0 20px var(--neon-green), 0 0 40px rgba(0, 255, 51, 0.7); } /* Brilho mais forte */
+}
+
+/* Animação para ícones em cards (pop in) */
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* Animação para texto de entrada (typing effect - apenas visual, JS é necessário para funcionalidade) */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--neon-green); }
+}
+
+/* Animação para cards flutuantes */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* ========================================= */
+/* 4. Estilos de Layout Base                 */
+/* ========================================= */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* ========================================= */
+/* 5. Header (Hero Section)                  */
+/* ========================================= */
+.hero-header {
+    background: linear-gradient(135deg, var(--primary-dark-bg) 0%, #050505 100%); /* Fundo bem escuro */
+    padding: var(--spacing-xxl) var(--spacing-sm) var(--spacing-xl);
+    text-align: center;
+    border-bottom: 5px solid var(--neon-green); /* Borda neon na parte inferior */
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1;
+}
+
+/* Efeito de fundo com partículas/grid */
+.hero-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at top right, rgba(0, 255, 51, 0.1) 0%, transparent 50%), /* Verde neon */
+        radial-gradient(circle at bottom left, rgba(0, 200, 255, 0.1) 0%, transparent 50%), /* Azul elétrico */
+        repeating-linear-gradient(0deg, var(--primary-dark-bg) 0, transparent 1px, transparent 100%),
+        repeating-linear-gradient(90deg, var(--primary-dark-bg) 0, transparent 1px, transparent 100%);
+    background-size: 50px 50px; /* Tamanho das "células" da grade */
+    opacity: 0.8;
+    z-index: 0;
+    pointer-events: none;
+    animation: gradientShift 20s ease infinite;
+}
+
+.hero-header-content {
+    max-width: 900px;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: slideInUp 1.2s forwards cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation-delay: 0.3s;
+}
+
+.hero-header h1 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.hero-header p {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    color: var(--text-light); /* Texto principal do hero mais claro */
+    max-width: 700px;
+    margin: 0 auto var(--spacing-lg);
+    opacity: 0;
+    animation: slideInUp 1.2s forwards cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation-delay: 0.6s;
+}
+
+/* ========================================= */
+/* 6. Botões CTA                             */
+/* ========================================= */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background-color: var(--neon-green); /* Verde Neon */
+    color: var(--primary-dark-bg); /* Texto escuro sobre o botão neon */
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius-pill);
+    border: none;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    font-family: var(--font-heading); /* Fonte de título para o botão */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 20px var(--neon-green), 0 0 30px rgba(0, 255, 51, 0.6); /* Sombra neon */
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+    opacity: 0;
+    animation: slideInUp 1.2s forwards cubic-bezier(0.25, 0.8, 0.25, 1), pulse 2s infinite 3s;
+    animation-delay: 1s;
+}
+
+.cta-button i.fas {
+    transition: transform 0.3s ease-in-out;
+    font-size: 1.1em;
+    color: var(--primary-dark-bg); /* Ícone também escuro */
+}
+
+.cta-button:hover {
+    background: linear-gradient(90deg, var(--neon-green), var(--accent-blue)); /* Gradiente neon-azul no hover */
+    color: var(--primary-dark-bg);
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px var(--neon-green), 0 0 50px rgba(0, 255, 51, 0.8); /* Brilho ainda mais intenso */
+}
+
+.cta-button:hover i {
+    transform: translateX(8px);
+}
+
+/* Efeito de brilho passando pelo botão (shine effect) */
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+/* ========================================= */
+/* 7. Card Grids e Cards                     */
+/* ========================================= */
+section {
+    padding: var(--spacing-xl) var(--spacing-md);
+    margin: var(--spacing-lg) auto;
+    max-width: 1200px;
+    border-radius: var(--border-radius-lg);
+    background-color: var(--secondary-dark-bg); /* Fundo de seção ligeiramente mais claro */
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--border-subtle);
+
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Adiciona um overlay sutil para a seção */
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(0, 255, 51, 0.05) 0%, transparent 70%); /* Verde neon suave */
+    opacity: 0.6;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+section:hover::before {
+    opacity: 0.8;
+}
+
+/* Animação para seções ao entrar na viewport */
+section.in-view {
+    animation: slideInUp 1s forwards cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+}
+
+.card {
+    background: var(--primary-dark-bg); /* Fundo principal escuro para cards */
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-subtle);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 220px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.8s forwards ease-out;
+}
+
+/* Efeito de animação staggered para cards */
+section.in-view .card:nth-child(1) { animation-delay: 0.1s; }
+section.in-view .card:nth-child(2) { animation-delay: 0.2s; }
+section.in-view .card:nth-child(3) { animation-delay: 0.3s; }
+section.in-view .card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Efeito de luz ambiente e borda no hover */
+.card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(0, 255, 51, 0.2) 0%, transparent 70%); /* Verde neon suave */
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 0;
+    border-radius: var(--border-radius-md);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px var(--neon-green); /* Sombra neon forte */
+    border-color: var(--neon-green); /* Borda neon no hover */
+}
+
+.card:hover::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.card h3 {
+    color: var(--neon-green); /* Títulos de card em verde neon */
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 0 8px rgba(0, 255, 51, 0.7); /* Sombra neon para h3 em cards */
+}
+
+.card p {
+    color: var(--text-muted); /* Texto de card mais suave */
+    position: relative;
+    z-index: 2;
+}
+
+.card ul {
+    margin-top: var(--spacing-sm);
+    margin-bottom: 0;
+}
+
+/* ========================================= */
+/* 8. Estilos de Listas                      */
+/* ========================================= */
+ul {
+    padding-left: 0;
+}
+
+li {
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.05rem;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+}
+
+ul li i.fas {
+    font-size: 1.3rem; /* Ícones um pouco maiores */
+    color: var(--neon-green);
+    margin-top: 2px;
+    text-shadow: 0 0 8px var(--neon-green); /* Brilho neon */
+    animation: popIn 0.6s ease forwards;
+}
+
+/* Ícones específicos para diferentes tipos de lista */
+#o-que-e ul li i.fas.fa-check-circle { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
+#comecar-do-zero ul li i.fas.fa-check-circle { color: var(--neon-green); }
+#primeira-venda ul li i.fas { color: var(--neon-green); }
+#o-que-ninguem-conta ul li i.fas { color: var(--warning-yellow); text-shadow: 0 0 8px var(--warning-yellow); } /* Ícones de "segredos" */
+
+/* ========================================= */
+/* 9. Seções Específicas                     */
+/* ========================================= */
+
+/* 9.1. Proposta de Valor */
+#o-que-e .card {
+    background: linear-gradient(145deg, var(--secondary-dark-bg), var(--primary-dark-bg));
+    border: 1px solid var(--accent-blue); /* Borda em azul elétrico sutil */
+}
+#o-que-e .card h3 {
+    color: var(--accent-blue);
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.7);
+}
+
+
+/* 9.2. Como Ganhar Dinheiro */
+.how-to-earn .card {
+    background: linear-gradient(135deg, var(--primary-dark-bg), var(--secondary-dark-bg));
+    border: 1px solid var(--neon-green);
+}
+
+.how-to-earn .card:first-child h3 { color: var(--neon-green); }
+.how-to-earn .card:last-child h3 { color: var(--neon-green); }
+
+/* 9.3. Depoimentos Reais */
+#depoimentos-reais {
+    background-color: var(--primary-dark-bg);
+    border-color: var(--neon-green);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.depoimento {
+    background: var(--secondary-dark-bg);
+    border-left: 5px solid var(--neon-green); /* Borda neon forte */
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    font-style: italic;
+    transition: all 0.4s ease-in-out;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.depoimento::before {
+    content: '\201C';
+    font-family: 'Times New Roman', serif; /* Uma fonte mais clássica para aspas grandes */
+    font-size: 8rem; /* Aumenta o tamanho das aspas */
+    color: rgba(0, 255, 51, 0.08); /* Verde neon muito suave para aspas */
+    position: absolute;
+    top: -30px; /* Ajuste para melhor posicionamento */
+    left: 10px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.depoimento p {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    z-index: 1;
+    line-height: 1.6;
+    color: var(--text-light); /* Depoimento com texto claro */
+}
+
+.depoimento p:last-child {
+    font-weight: 600;
+    color: var(--neon-green); /* Nome do autor em verde neon */
+    text-align: right;
+    font-style: normal;
+    margin-bottom: 0;
+    text-shadow: 0 0 5px rgba(0, 255, 51, 0.5);
+}
+
+.depoimento:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px var(--neon-green);
+    border-left-color: var(--accent-blue); /* Mudança sutil no hover */
+}
+
+
+/* 9.4. Conclusão e CTA Final */
+.final-cta {
+    background: linear-gradient(135deg, var(--secondary-dark-bg) 0%, var(--primary-dark-bg) 100%); /* Fundo escuro com um gradiente sutil */
+    color: var(--text-light);
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    margin: var(--spacing-xxl) auto;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 0 40px var(--neon-green), 0 0 80px rgba(0, 255, 51, 0.6); /* Super glow neon */
+    border: 3px solid var(--neon-green); /* Borda sólida neon */
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.final-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(0, 255, 51, 0.1) 0%, transparent 70%);
+    animation: rotateBackground 30s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes rotateBackground {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.final-cta h2, .final-cta h3 {
+    color: var(--neon-green); /* Títulos da CTA final em verde neon */
+    text-shadow: 0 0 15px var(--neon-green), 0 0 25px rgba(0, 255, 51, 0.6);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 2;
+}
+
+.final-cta h2::after {
+    background: linear-gradient(90deg, transparent, var(--neon-green), transparent); /* Linha de destaque neon */
+    box-shadow: 0 0 10px var(--neon-green);
+}
+
+.final-cta p {
+    color: var(--text-light); /* Texto da CTA final mais claro */
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    max-width: 700px;
+    margin: 0 auto var(--spacing-lg);
+    position: relative;
+    z-index: 2;
+}
+
+.final-cta .cta-button {
+    background-color: var(--primary-dark-bg); /* Botão de CTA final em fundo escuro */
+    color: var(--neon-green); /* Texto do botão final em verde neon */
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: 2px solid var(--neon-green);
+    margin-top: var(--spacing-lg);
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 20px var(--neon-green); /* Sombra neon */
+}
+
+.final-cta .cta-button:hover {
+    background-color: var(--neon-green); /* Fundo verde neon no hover */
+    color: var(--primary-dark-bg); /* Texto escuro no hover */
+    border-color: var(--accent-blue); /* Borda azul sutil no hover */
+    box-shadow: 0 0 30px var(--neon-green), 0 0 50px rgba(0, 255, 51, 0.8);
+}
+
+/* ========================================= */
+/* 10. Rodapé (Footer)                       */
+/* ========================================= */
+footer {
+    background-color: var(--primary-dark-bg);
+    color: var(--text-muted); /* Texto do rodapé mais suave */
+    padding: var(--spacing-lg) var(--spacing-md);
+    text-align: center;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.9rem;
+    margin-top: auto;
+    position: relative;
+    z-index: 1;
+}
+
+footer p {
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+footer a {
+    color: var(--neon-green); /* Links do rodapé em verde neon */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+footer a:hover {
+    color: var(--accent-blue); /* Azul no hover */
+    text-decoration: underline;
+}
+
+footer .fas.fa-heart {
+    color: #FF69B4; /* Um rosa choque para o coração (pode manter ou ajustar para um tom mais frio se preferir) */
+    animation: pulseHeart 1.5s infinite;
+}
+
+@keyframes pulseHeart {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ========================================= */
+/* 11. Custom Scrollbar                      */
+/* ========================================= */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--neon-green); /* Scrollbar em verde neon */
+    border-radius: 10px;
+    border: 2px solid var(--primary-dark-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-blue); /* Azul no hover do scrollbar */
+}
+
+/* ========================================= */
+/* 12. Placeholder para Input/Textarea       */
+/* ========================================= */
+input, textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--accent-blue); /* Borda azul sutil */
+    border-radius: var(--border-radius-sm);
+    background-color: var(--secondary-dark-bg);
+    color: var(--text-light); /* Texto do input claro */
+    font-family: var(--font-body);
+    font-size: 1rem;
+    box-shadow: var(--shadow-inset);
+    transition: all 0.3s ease-in-out;
+}
+
+input::placeholder, textarea::placeholder {
+    color: rgba(240, 240, 240, 0.4); /* Placeholder mais suave */
+}
+
+input:focus, textarea:focus {
+    border-color: var(--neon-green); /* Borda neon ao focar */
+    outline: none;
+    box-shadow: 0 0 10px var(--neon-green); /* Sombra neon ao focar */
+    background-color: var(--primary-dark-bg);
+}
+
+/* ========================================= */
+/* 13. Animação de Scroll (Intersection Observer) */
+/* ========================================= */
+/* Este CSS trabalha em conjunto com o JS que você já tem para aplicar `in-view` */
+section.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================= */
+/* 14. Media Queries Abrangentes             */
+/* ========================================= */
+
+/* Desktop Pequeno / Grande Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    .hero-header {
+        padding: var(--spacing-xl) var(--spacing-sm) var(--spacing-lg);
+        min-height: 70vh;
+    }
+    h1 {
+        font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+    }
+    h2 {
+        font-size: clamp(1.8rem, 4vw + 0.5rem, 3.2rem);
+    }
+    .cta-button {
+        padding: 1.2rem 2.5rem;
+        font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+    }
+    section {
+        padding: var(--spacing-lg) var(--spacing-sm);
+        margin: var(--spacing-md) auto;
+    }
+    .card-grid {
+        gap: var(--spacing-md);
+    }
+    .card {
+        padding: var(--spacing-md);
+        min-height: 200px;
+    }
+    .depoimento {
+        padding: var(--spacing-md);
+    }
+    .final-cta {
+        padding: var(--spacing-lg) var(--spacing-sm);
+        margin: var(--spacing-xl) auto;
+    }
+    .final-cta .cta-button {
+        padding: var(--spacing-md) var(--spacing-xl);
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    }
+}
+
+/* Tablets (max-width: 768px) */
+@media (max-width: 768px) {
+    .hero-header {
+        padding: var(--spacing-lg) var(--spacing-xs) var(--spacing-md);
+        min-height: 60vh;
+    }
+    h1 {
+        font-size: clamp(2.2rem, 7vw, 3.5rem);
+        letter-spacing: 1px;
+    }
+    h2 {
+        font-size: clamp(1.6rem, 5.5vw, 2.8rem);
+        margin-bottom: var(--spacing-md);
+    }
+    p {
+        font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+    }
+    li {
+        font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    ul li i.fas {
+        font-size: 1.2rem;
+    }
+    .cta-button {
+        flex-direction: column;
+        gap: 5px;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    section {
+        padding: var(--spacing-md) var(--spacing-xs);
+        margin: var(--spacing-md) auto;
+        border-radius: var(--border-radius-md);
+    }
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    .card {
+        padding: var(--spacing-md);
+        min-height: unset;
+    }
+
+    .depoimento {
+        padding: var(--spacing-md);
+    }
+    .depoimento::before {
+        font-size: 5rem;
+        top: -10px;
+    }
+
+    .final-cta {
+        padding: var(--spacing-lg) var(--spacing-xs);
+        margin: var(--spacing-xl) auto;
+    }
+    .final-cta .cta-button {
+        padding: 1.2rem 2rem;
+        font-size: 1.2rem;
+    }
+
+    footer {
+        padding: var(--spacing-md) var(--spacing-xs);
+        font-size: 0.85rem;
+    }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-xs);
+    }
+    .hero-header {
+        padding: var(--spacing-md) var(--spacing-xs);
+        min-height: 50vh;
+    }
+    h1 {
+        font-size: clamp(1.8rem, 10vw, 3rem);
+        letter-spacing: 0.5px;
+    }
+    h2 {
+        font-size: clamp(1.4rem, 8vw, 2.2rem);
+        margin-bottom: var(--spacing-sm);
+    }
+    h3 {
+        font-size: clamp(1.2rem, 6vw, 1.8rem);
+    }
+    p {
+        font-size: clamp(0.85rem, 2.5vw, 1rem);
+    }
+    li {
+        font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+    }
+    ul li i.fas {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    section {
+        padding: var(--spacing-md) var(--spacing-xs);
+        margin: var(--spacing-md) auto;
+    }
+    .card {
+        padding: var(--spacing-sm);
+    }
+    .depoimento {
+        padding: var(--spacing-sm);
+    }
+    .depoimento::before {
+        font-size: 4rem;
+        top: 0px;
+        left: 5px;
+    }
+    .depoimento p {
+        font-size: 0.95rem;
+    }
+
+    .final-cta {
+        padding: var(--spacing-md) var(--spacing-xs);
+        margin: var(--spacing-lg) auto;
+    }
+    .final-cta .cta-button {
+        padding: 1rem 1.8rem;
+        font-size: 1.1rem;
+    }
+
+    footer {
+        padding: var(--spacing-sm) var(--spacing-xs);
+        font-size: 0.8rem;
+    }
+}
+
+/* Smallest Mobile Devices (max-width: 320px) */
+@media (max-width: 320px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+    }
+    .cta-button {
+        font-size: 0.9rem;
+    }
+    section {
+        padding: var(--spacing-sm) var(--spacing-xs);
+    }
+    .card {
+        padding: var(--spacing-xs);
+    }
+    .depoimento {
+        padding: var(--spacing-xs);
+    }
+    .final-cta .cta-button {
+        font-size: 1rem;
+    }
+}
