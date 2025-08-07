@@ -1,16 +1,12 @@
-// =========================================
-// JavaScript Avançado e Profissional
-// =========================================
-
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Intersection Observer for Scroll Animations
+    // 1. Interseções e animações
     // ------------------------------------------------
     const sections = document.querySelectorAll('section');
-    const cards = document.querySelectorAll('.card'); // Select all cards for staggered animation
+    const cards = document.querySelectorAll('.card'); // Seleção de cards e animações
 
     const observerOptions = {
-        root: null, // viewport
+        root: null, // view port
         rootMargin: '0px',
         threshold: 0.2 // Trigger when 20% of the element is visible
     };
@@ -38,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Observe each section
+    // observar a seção
     sections.forEach(section => {
         sectionObserver.observe(section);
     });

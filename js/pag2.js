@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Agora o seletor `'.section'` vai encontrar todas as seções, incluindo a nova.
     const sections = document.querySelectorAll('.section'); 
 
     const observerOptions = {
