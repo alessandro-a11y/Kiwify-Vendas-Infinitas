@@ -80,12 +80,12 @@ img:hover {
     --font-body: 'Barlow', 'Inter', sans-serif; /* Legível e moderna. Adicione 'Inter' como fallback ou opção. */
 
     /* Espaçamento Global */
-    --spacing-xs: 0.5rem; /* 8px */
-    --spacing-sm: 1rem;   /* 16px */
-    --spacing-md: 1.5rem; /* 24px */
-    --spacing-lg: 3rem;   /* 48px */
-    --spacing-xl: 6rem;   /* 96px */
-    --spacing-xxl: 10rem; /* 160px */
+    --spacing-xs: 0.5rem;   /* 8px */
+    --spacing-sm: 1rem;     /* 16px */
+    --spacing-md: 1.5rem;   /* 24px */
+    --spacing-lg: 3rem;     /* 48px */
+    --spacing-xl: 6rem;     /* 96px */
+    --spacing-xxl: 10rem;   /* 160px */
 
     /* Sombras */
     --shadow-sm: 0 4px 8px var(--shadow-color);
@@ -1059,5 +1059,6 @@ section.in-view {
     }
     .final-cta .cta-button {
         font-size: 1rem;
+            
     }
 }

@@ -1,170 +1,119 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Interseções e animações
-    // ------------------------------------------------
-    const sections = document.querySelectorAll('section');
-    const cards = document.querySelectorAll('.card'); // Seleção de cards e animações
-
-    const observerOptions = {
-        root: null, // view port
-        rootMargin: '0px',
-        threshold: 0.2 // Trigger when 20% of the element is visible
+    // Funções auxiliares (helpers) para evitar repetição de código (DRY - Don't Repeat Yourself)
+    const aplicarAnimacaoEscalonada = (elementos, multiplicadorDelay) => {
+        elementos.forEach((elemento, indice) => {
+            elemento.style.animationDelay = `${0.1 + indice * multiplicadorDelay}s`;
+            elemento.classList.add('in-view');
+        });
     };
 
-    const sectionObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                // For staggered card animation, apply a delay to each card
-                if (entry.target.id === 'o-que-e' || entry.target.classList.contains('how-to-earn')) {
-                    const cardsInSection = entry.target.querySelectorAll('.card');
-                    cardsInSection.forEach((card, index) => {
-                        card.style.animationDelay = `${0.1 + index * 0.15}s`; // Staggered delay
-                        card.classList.add('in-view'); // Add in-view to cards
-                    });
-                } else if (entry.target.id === 'depoimentos-reais') {
-                     const testimonialsInGrid = entry.target.querySelectorAll('.depoimento');
-                     testimonialsInGrid.forEach((testimonial, index) => {
-                         testimonial.style.animationDelay = `${0.1 + index * 0.2}s`;
-                         testimonial.classList.add('in-view'); // Add in-view to testimonials
-                     });
-                }
-                observer.unobserve(entry.target); // Stop observing once it's in view
-            }
-        });
-    }, observerOptions);
-
-    // observar a seção
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-
-    // Observe hero content separately for its slide-in animation
-    const heroContent = document.querySelector('.hero-header-content');
-    if (heroContent) {
-        const heroObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // The CSS handles the initial slideInUp and animation-delay for hero-header-content
-                    // We just need to make sure the observer adds 'in-view' if you decide to trigger other animations this way
-                    // For now, the animation is directly on the element in CSS with fixed delays.
-                    // If you want to use JS to trigger, you'd remove `opacity: 0; animation: slideInUp ...` from CSS
-                    // and add `entry.target.classList.add('in-view');` here.
-                    // Given the current CSS, the animation is already handled.
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 }); // Less threshold for hero to appear quickly
-        heroObserver.observe(heroContent);
-    }
-
-
-    // 2. Smooth Scrolling for Anchor Links
-    // ------------------------------------
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                // Scroll smoothly to the target element
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start' // Align the top of the element with the top of the viewport
+    const configurarObservador = (seletor, threshold, callback) => {
+        const elementos = document.querySelectorAll(seletor);
+        if (elementos.length > 0) {
+            const observador = new IntersectionObserver((entradas, observador) => {
+                entradas.forEach(entrada => {
+                    if (entrada.isIntersecting) {
+                        callback(entrada.target);
+                        observador.unobserve(entrada.target);
+                    }
                 });
+            }, { threshold });
+            elementos.forEach(elemento => observador.observe(elemento));
+        }
+    };
 
-                // Optional: Update the URL hash without a jump
-                history.pushState(null, null, targetId);
+    // 1. Interseções e animações
+    // ------------------------------------------------
+    configurarObservador('section', 0.2, (secao) => {
+        secao.classList.add('in-view');
+
+        const idSecao = secao.id;
+        const classesSecao = secao.classList;
+
+        if (idSecao === 'o-que-e' || classesSecao.contains('how-to-earn')) {
+            aplicarAnimacaoEscalonada(secao.querySelectorAll('.card'), 0.15);
+        } else if (idSecao === 'depoimentos-reais') {
+            aplicarAnimacaoEscalonada(secao.querySelectorAll('.depoimento'), 0.2);
+        }
+    });
+
+    configurarObservador('.hero-header-content', 0.1, (conteudoHero) => {
+        // A animação do herói é controlada diretamente pelo CSS.
+        // Se a lógica fosse por aqui, seria algo como:
+        // conteudoHero.classList.add('in-view');
+    });
+
+    // 2. Rolagem suave para links âncora
+    // ------------------------------------
+    document.querySelectorAll('a[href^="#"]').forEach(ancora => {
+        ancora.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const idAlvo = ancora.getAttribute('href');
+            const elementoAlvo = document.querySelector(idAlvo);
+
+            if (elementoAlvo) {
+                elementoAlvo.scrollIntoView({ behavior: 'smooth' });
+                history.pushState(null, '', idAlvo);
             }
         });
     });
 
-    // 3. Dynamic Typing Effect (Optional)
+    // 3. Efeito de digitação dinâmico
     // ------------------------------------
-    // This requires a specific HTML element to apply the effect.
-    // Let's assume you have a <span id="typing-text"> in your H1 or P in the hero section.
+    const elementoTextoDigitando = document.getElementById('typing-text');
+    if (elementoTextoDigitando) {
+        const textos = JSON.parse(elementoTextoDigitando.dataset.texts);
+        let indiceTexto = 0;
+        let indiceCaractere = 0;
+        let estaDeletando = false;
+        const velocidadeDigitacao = 100;
+        const velocidadeDelecao = 50;
+        const pausaAntesDeletar = 2000;
+        const pausaAntesDigitar = 1000;
 
-    const typingTextElement = document.getElementById('typing-text');
-    if (typingTextElement) {
-        const texts = JSON.parse(typingTextElement.dataset.texts); // Get texts from data-texts attribute
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typingSpeed = 100; // milliseconds per character
-        const deletingSpeed = 50; // milliseconds per character when deleting
-        const pauseBeforeDelete = 2000; // milliseconds pause before starting to delete
-        const pauseBeforeType = 1000; // milliseconds pause before typing next text
-
-        function type() {
-            const currentText = texts[textIndex];
-            if (!isDeleting) {
-                // Typing
-                typingTextElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-                if (charIndex === currentText.length) {
-                    isDeleting = true;
-                    setTimeout(type, pauseBeforeDelete); // Pause before deleting
+        const digitar = () => {
+            const textoAtual = textos[indiceTexto];
+            if (!estaDeletando) {
+                elementoTextoDigitando.textContent = textoAtual.substring(0, indiceCaractere + 1);
+                indiceCaractere++;
+                if (indiceCaractere === textoAtual.length) {
+                    estaDeletando = true;
+                    setTimeout(digitar, pausaAntesDeletar);
                 } else {
-                    setTimeout(type, typingSpeed);
+                    setTimeout(digitar, velocidadeDigitacao);
                 }
             } else {
-                // Deleting
-                typingTextElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    textIndex = (textIndex + 1) % texts.length; // Move to the next text
-                    setTimeout(type, pauseBeforeType); // Pause before typing next
+                elementoTextoDigitando.textContent = textoAtual.substring(0, indiceCaractere - 1);
+                indiceCaractere--;
+                if (indiceCaractere === 0) {
+                    estaDeletando = false;
+                    indiceTexto = (indiceTexto + 1) % textos.length;
+                    setTimeout(digitar, pausaAntesDigitar);
                 } else {
-                    setTimeout(type, deletingSpeed);
+                    setTimeout(digitar, velocidadeDelecao);
                 }
             }
-        }
+        };
 
-        // Start the typing animation after a small delay to allow other hero animations
-        setTimeout(type, 1500);
+        setTimeout(digitar, 1500);
     }
 
-    // You might also want to add a "back to top" button with smooth scroll
-    const backToTopButton = document.querySelector('#back-to-top'); // Assuming you'll add an ID to a button
-    if (backToTopButton) {
+    // 4. Botão "Voltar ao Topo"
+    // ------------------------------------
+    const botaoVoltarAoTopo = document.querySelector('#back-to-top');
+    if (botaoVoltarAoTopo) {
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) { // Show button after scrolling down 300px
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
+            botaoVoltarAoTopo.classList.toggle('show', window.scrollY > 300);
         });
 
-        backToTopButton.addEventListener('click', (e) => {
+        botaoVoltarAoTopo.addEventListener('click', (e) => {
             e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
+    // A função auxiliar `isInViewport` foi removida, pois o `IntersectionObserver`
+    // já lida com a detecção de visibilidade de forma mais eficiente.
 });
-
-// Helper function to check if an element is in viewport (alternative if IntersectionObserver is too complex for specific cases)
-function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
-
-// Example of how you might trigger an animation for a single element if needed
-// const myAnimatedElement = document.querySelector('.my-animated-element');
-// if (myAnimatedElement) {
-//     window.addEventListener('scroll', () => {
-//         if (isInViewport(myAnimatedElement) && !myAnimatedElement.classList.contains('in-view')) {
-//             myAnimatedElement.classList.add('in-view');
-//         }
-//     });
-// }
